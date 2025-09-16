@@ -2,20 +2,47 @@
 library(shiny)
 library(bslib)
 library(leaflet)
+library(here)
 
-# Define UI for application that draws a histogram
+#read in data
+df = read.csv(here("data/cleaned/dublin_canvas_clean.csv"))
+
+
+# UI -----------------------------------------------------------
+
+# Define UI
 ui <- fluidPage(
+    
+    titlePanel("Dublin Canvas locations"),
+    
+    sidebar(selectInput(inputId = "y", label = "Y-axis:",
+                            choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"),
+                            selected = "audience_score")),
 
-    leafletOutput("map")
+    leafletOutput("map", width = "100%", height = 700)
 )
 
-# Define server logic required to draw a histogram
+
+
+
+# Server -----------------------------------------------------------
+
+# Define server logic 
 server <- function(input, output) {
 
    output$map <- renderLeaflet({
-     leaflet() |> 
+     leaflet(data = df) |> 
+       #add base tiled map
        addTiles() |> 
-       setView(-6.2603, 53.3498, zoom = 15)
+       #add location markers for artworks with hover-over label
+       addMarkers(~long, ~lat, 
+                  label = ~paste(title, "by", artist),
+                  #make markers clickable to take you to URL with more info
+                  popup = ~paste0("<a href='", url, "' target='_blank'>",
+                                  "<img src='", img, "' width='200px'>",
+                                  "</a><br>", title, " by ", artist)) |>
+       #set view and zoom
+       setView(-6.2603, 53.3498, zoom = 11)
    })
 }
 
