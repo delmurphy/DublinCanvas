@@ -16,4 +16,10 @@ df = df[!is.na(df$lat),]
 #remove apostrophe rom end of titles
 df$title = substr(df$title, 1, nchar(df$title)-1)
 
+#some of the artworks seem to be gone (with date ranges in the year column, e.g. "2015 - 2018")
+#add a column to filter for canvases that are no longer around, and another year column to give just the year of creation
+df$yearrange = df$year
+df$year = as.numeric(substr(df$yearrange, 1, 4))
+df$historic = ifelse(as.character(df$year)==df$yearrange, 0, 1)
+
 write.csv(df, here("data/cleaned/dublin_canvas_clean.csv"))
