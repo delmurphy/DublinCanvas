@@ -74,6 +74,9 @@ html, body {width:100%; height:100%; margin:0; padding:0;}
     
     checkboxInput("historic", "Include historic (no longer existing) canvases", value = TRUE),
     
+    p(br()),
+    actionButton("reset", "Reset zoom", icon("expand")),
+    
     p(class = "text-muted",
       br(),
       "For more information visit", a("Dublin Canvas", href = "https://www.dublincanvas.com", target = "_blank")
@@ -114,7 +117,7 @@ server <- function(input, output) {
        #add base tiled map
        addTiles() |> 
        #set view and zoom
-       setView(-6.2603, 53.34, zoom = 10)
+       setView(-6.2603, 53.3498, zoom = 10)
    })
    
   #add/updated markers dynamically (include historic artworks)
@@ -136,6 +139,18 @@ server <- function(input, output) {
                     maxClusterRadius = 40  # smaller clusters form only if markers are very close
                   )
        )
+   })
+   
+   # Reset to original view
+   observeEvent(input$reset, {
+     leafletProxy("map") |>
+       setView(lng = -6.2603, lat = 53.3498, zoom = 11)
+   })
+   
+   # Reset to original view when searching
+   observeEvent(input$search, {
+     leafletProxy("map") |>
+       setView(lng = -6.2603, lat = 53.3498, zoom = 11)
    })
 
 }
