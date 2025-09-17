@@ -80,7 +80,9 @@ html, body {width:100%; height:100%; margin:0; padding:0;}
     p(class = "text-muted",
       br(),
       "For more information visit", a("Dublin Canvas", href = "https://www.dublincanvas.com", target = "_blank")
-      )
+      ),
+    p(class = "text-muted",
+      "See how this map was built:", a("Github repository", href = "https://github.com/delmurphy/DublinCanvas", target = "_blank"))
   )
 )
 
