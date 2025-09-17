@@ -144,13 +144,13 @@ server <- function(input, output) {
    # Reset to original view
    observeEvent(input$reset, {
      leafletProxy("map") |>
-       setView(lng = -6.2603, lat = 53.3498, zoom = 11)
+       setView(lng = -6.2603, lat = 53.3498, zoom = 10)
    })
    
    # Reset to original view when searching
    observeEvent(input$search, {
      leafletProxy("map") |>
-       setView(lng = -6.2603, lat = 53.3498, zoom = 11)
+       setView(lng = -6.2603, lat = 53.3498, zoom = 10)
    })
 
 }
