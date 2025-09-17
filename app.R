@@ -36,15 +36,27 @@ html, body {width:100%; height:100%; margin:0; padding:0;}
 }
 
 /* Marker clusters: outer and inner circles */
-.marker-cluster, .marker-cluster div {
+/* Outer circle */
+.marker-cluster {
   background-color: rgba(31, 119, 180, 0.6) !important; /* blue3 */
   border: 2px solid rgba(31, 119, 180, 0.6) !important;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Inner circle */
+.marker-cluster div {
+  background-color: #1f77b4 !important; /* solid blue inner */
+  border: 2px solid #1f77b4 !important;
+  border-radius: 50% !important;
+  margin: auto !important;
 }
 
 /* Cluster number text */
 .marker-cluster span {
-  color: white !important;
-  font-weight: bold;
+  color: white !important; font-weight: bold;
 }
 ")),
     
@@ -57,11 +69,15 @@ html, body {width:100%; height:100%; margin:0; padding:0;}
   #sidebar
   absolutePanel(top = 100, right = 10, class = "controls-panel",
     title = "Search for Canvases",
-
-    checkboxInput("historic", "Include historic canvases", value = TRUE),
     
-    textInput("search", "Search for an artist or artwork", value = "")
+    textInput("search", "Search for an artist or artwork", value = ""), 
     
+    checkboxInput("historic", "Include historic (no longer existing) canvases", value = TRUE),
+    
+    p(class = "text-muted",
+      br(),
+      "For more information visit", a("Dublin Canvas", href = "https://www.dublincanvas.com", target = "_blank")
+      )
   )
 )
 
@@ -98,7 +114,7 @@ server <- function(input, output) {
        #add base tiled map
        addTiles() |> 
        #set view and zoom
-       setView(-6.2603, 53.3498, zoom = 11)
+       setView(-6.2603, 53.34, zoom = 10)
    })
    
   #add/updated markers dynamically (include historic artworks)
