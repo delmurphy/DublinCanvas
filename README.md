@@ -3,6 +3,8 @@
 This interactive map shows the location of street art pieces around Dublin that are part of the Dublin Canvas initiative.
 For more information see www.dublincanvas.com
 
+The map was built with R Shiny and Leaflet
+
 Data come from https://data.gov.ie/dataset/dublin-canvas-public-art
 Published by: Dublin City Council
 Licensed under: Creative Commons Attribution 4.0
